@@ -8,7 +8,7 @@ from mplsoccer import Pitch, VerticalPitch
 st.title ("Mapa de chutes")
 st.subheader("Filtra clubes")
 
-data = pd.read_csv('J:/Projetos/BD/events.csv')
+data = pd.read_csv('events.csv')
 
 pitch = Pitch(pitch_type='wyscout', axis=False, label=False, half=True, corner_arcs=True,pitch_color='grass', line_color='white',
               stripe=False)
@@ -20,6 +20,6 @@ y_data = data['Y']
 
 
 # Plotar os dados X e Y no campo de futebol
-ax.scatter(x_data, y_data, color='blue')
+ax.scatter(x_data, y_data, color='purple')
 
 st.pyplot(fig)
