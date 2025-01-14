@@ -1,2 +1,5 @@
 pandas
 mplsoccer
+matplotlib
+matplotlib.pyplot
+numpy
