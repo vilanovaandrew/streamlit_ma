@@ -7,10 +7,9 @@ from matplotlib.patheffects import withStroke
 import numpy as np
 
 
+data = pd.read_csv('EventAssistencia.csv')
 
 st.title ("Mapa de Assistências")
-
-data = pd.read_csv('EventAssistencia.csv')
 
 # Criar os filtros com 'None' ou valores vazios como padrão
 time_filter = st.selectbox("Selecione o Time", ['Todos'] + sorted(list(data['Team'].unique())))
@@ -39,6 +38,8 @@ if time_filter != 'Todos':
 if player_filter.strip() != "":
     filtered_data = filtered_data[filtered_data['Player'].str.contains(player_filter, case=False, na=False)]
 
+st.markdown("Serão exibidos apenas os eventos com imagens nítidas.")
+
 # Set up the pitch
 pitch = Pitch(pitch_type='wyscout', pitch_color='#22312b', line_color='#c7d5cc')
 fig, ax = pitch.draw( constrained_layout=True, tight_layout=False)
@@ -55,7 +56,7 @@ ax.scatter(filtered_data['X'], filtered_data['Y'], color='#FFFAFA', s=10, zorder
 st.pyplot(fig)
 
 # Ranking de jogadores
-st.subheader("Liderança de Assistências")
+st.subheader("Ranking de Assistências")
 
 # Calcular a contagem de Assistências por jogador
 player_counts = filtered_data['Player'].value_counts()

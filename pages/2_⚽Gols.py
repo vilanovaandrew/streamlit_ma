@@ -42,6 +42,8 @@ if modo_do_gol_filter != 'Todos':
 if player_filter.strip() != "":
     filtered_data = filtered_data[filtered_data['Player'].str.contains(player_filter, case=False, na=False)]
 
+st.markdown("Serão exibidos apenas os eventos com imagens nítidas.")
+
 # Criar o layout com colunas
 col1, col2 = st.columns(2)
 
@@ -63,7 +65,7 @@ with col2:
     fig.set_facecolor('#f4edf0')
     
     # Gerar o heatmap
-    bin_statistic = pitch.bin_statistic(filtered_data['X'], filtered_data['Y'], statistic='count', bins=(6, 5), normalize=True)
+    bin_statistic = pitch.bin_statistic(filtered_data['X'], filtered_data['Y'], statistic='count', bins=(6, 6), normalize=True)
     pitch.heatmap(bin_statistic, ax=ax, cmap='Reds', edgecolor='gray')
     
     # Efeitos de texto para os rótulos do heatmap
