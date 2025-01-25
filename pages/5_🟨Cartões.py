@@ -82,13 +82,25 @@ filtered_aggregated_data = (
         'Vermelho': 'sum'
     })
     .rename(columns={
-        'Amarelo': 'Total Amarelos',
-        'Vermelho': 'Total Vermelhos'
+        'Amarelo': 'Cartões Amarelos',
+        'Vermelho': 'Cartões Vermelhos'
     })
 )
 
-# Exibir a tabela após o filtro
+# Adicionar a nova coluna 'Total Cartões' que é a soma das colunas 'Cartões Amarelos' e 'Cartões Vermelhos'
+filtered_aggregated_data['Total Cartões'] = filtered_aggregated_data['Cartões Amarelos'] + filtered_aggregated_data['Cartões Vermelhos']
 
+# Ordenar os dados pela coluna 'Total Cartões' de forma decrescente e, em caso de empate, por 'Jogador' em ordem alfabética
+filtered_aggregated_data = filtered_aggregated_data.sort_values(by=['Total Cartões', 'Jogador'], ascending=[False, True])
+
+# Resetar o índice para ordenar conforme 'Total Cartões' e 'Jogador' e renomear a coluna de índice para "Posição"
+filtered_aggregated_data = filtered_aggregated_data.reset_index(drop=True)
+
+# Ajustar o índice para começar de 1 e renomeá-lo como 'Posição'
+filtered_aggregated_data.index = filtered_aggregated_data.index + 1
+filtered_aggregated_data.index.name = 'Posição'
+
+# Exibir a tabela após a ordenação
 if not filtered_aggregated_data.empty:
     st.dataframe(filtered_aggregated_data, use_container_width=True)
 else:

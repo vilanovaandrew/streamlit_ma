@@ -102,6 +102,10 @@ aggregated_filtered_data['Tempo Médio por Partida'] = aggregated_filtered_data[
 if not aggregated_filtered_data.empty:
     aggregated_filtered_data = aggregated_filtered_data.sort_values(by='Tempo Jogado', ascending=False, ignore_index=True)
 
+# Ajustar o índice para começar de 1 e renomeá-lo como 'Posição'
+aggregated_filtered_data.index = aggregated_filtered_data.index + 1
+aggregated_filtered_data.index.name = 'Posição'
+
 # Exibir a tabela abaixo dos gráficos, com índice começando em 1
 if not aggregated_filtered_data.empty:
     st.dataframe(aggregated_filtered_data, use_container_width=True)

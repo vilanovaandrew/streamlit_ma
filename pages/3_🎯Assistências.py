@@ -65,8 +65,21 @@ player_counts = filtered_data['Player'].value_counts()
 ranking_table = player_counts.reset_index()
 ranking_table.columns = ['Jogador', 'Assistências']
 
+# Garantir que a coluna 'Player' seja única para associar corretamente o time
+# Criar um dicionário para mapear jogadores para seus times, levando em consideração apenas jogadores únicos
+player_team_map = filtered_data.drop_duplicates(subset='Player')[['Player', 'Team']].set_index('Player')['Team'].to_dict()
+
+# Adicionar a coluna 'Time' usando o dicionário gerado
+ranking_table['Time'] = ranking_table['Jogador'].map(player_team_map)
+
 # Ordenar pela quantidade de Assistências (decrescente) e pelo nome do jogador (crescente)
 ranking_table = ranking_table.sort_values(by=['Assistências', 'Jogador'], ascending=[False, True]).reset_index(drop=True)
+
+# Ajustar o índice para começar de 1
+ranking_table.index = ranking_table.index + 1
+
+# Definir o nome da coluna de índice como 'Posição'
+ranking_table.index.name = 'Posição'
 
 # Exibir a tabela abaixo dos gráficos, com índice começando em 1
 st.dataframe(ranking_table, use_container_width=True)
